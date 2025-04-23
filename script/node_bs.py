@@ -122,7 +122,7 @@ def raise_pull_request(branch_pkg):
     pr_owner = "linux-on-ibm-z"  
     github_token=input("Enter github token:")
     
-    pr_repo = "scripts"
+    pr_repo = "build-scripts"
 
     pr_title = "Currency: Added build_script and build_info.json for "+package_name
     base ="master"

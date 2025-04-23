@@ -7,7 +7,7 @@ import docker
 import json
 
 
-GITHUB_BUILD_SCRIPT_BASE_REPO = "scripts"
+GITHUB_BUILD_SCRIPT_BASE_REPO = "build-scripts"
 GITHUB_BUILD_SCRIPT_BASE_OWNER = "linux-on-ibm-z"
 HOME = os.getcwd()
 
