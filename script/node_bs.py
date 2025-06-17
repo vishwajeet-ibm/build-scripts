@@ -125,7 +125,7 @@ def raise_pull_request(branch_pkg):
     pr_repo = "build-scripts"
 
     pr_title = "Currency: Added build_script and build_info.json for "+package_name
-    base ="master"
+    base ="main"
     
     head="{}:{}".format(user_name,branch_pkg)
     maintainer_can_modify = True
