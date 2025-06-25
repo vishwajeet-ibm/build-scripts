@@ -66,6 +66,92 @@ jobs:
             - .
         use: build_cache
 
+    - stage: Wheel build
+      if: env(WHEEL_BUILD) = true
+      name: "Create Wheel for Python 3.9"
+      env: PYTHON_VERSION="3.9"
+      script:
+        - echo "wheel build python 3.9"
+        - source variable.sh
+        - chmod +x ./script/build_wheels.sh; bash ./script/build_wheels.sh;
+        - sudo chmod a+r *.whl
+        - WHEEL_FILE=*.whl
+        - chmod +x ./script/upload-scripts/upload_wheel.sh; bash ./script/upload-scripts/upload_wheel.sh $WHEEL_FILE
+      workspaces:
+        create:
+          name: wheels_cache_39
+          paths:
+            - ./*.whl
+        use: build_cache
+      allow_failure: true
+
+    - name: "Create Wheel for Python 3.10"
+      if: env(WHEEL_BUILD) = true
+      env: PYTHON_VERSION="3.10"
+      script:
+        - echo "wheel build python 3.10"
+        - source variable.sh
+        - chmod +x ./script/build_wheels.sh; bash ./script/build_wheels.sh;
+        - sudo chmod a+r *.whl
+        - WHEEL_FILE=*.whl
+        - chmod +x ./script/upload-scripts/upload_wheel.sh; bash ./script/upload-scripts/upload_wheel.sh $WHEEL_FILE
+      workspaces:
+        create:
+          name: wheels_cache_310
+          paths:
+            - ./*.whl
+        use: build_cache
+
+    - name: "Create Wheel for Python 3.11"
+      if: env(WHEEL_BUILD) = true
+      env: PYTHON_VERSION="3.11"
+      script:
+        - echo "wheel build python 3.11"
+        - source variable.sh
+        - chmod +x ./script/build_wheels.sh; bash ./script/build_wheels.sh;
+        - sudo chmod a+r *.whl
+        - WHEEL_FILE=*.whl
+        - chmod +x ./script/upload-scripts/upload_wheel.sh; bash ./script/upload-scripts/upload_wheel.sh $WHEEL_FILE
+      workspaces:
+        create:
+          name: wheels_cache_311
+          paths: ./*.whl
+        use: build_cache
+
+    - name: "Create Wheel for Python 3.12"
+      if: env(WHEEL_BUILD) = true
+      env: PYTHON_VERSION="3.12"
+      script:
+        - echo "wheel build python 3.12"
+        - source variable.sh
+        - chmod +x ./script/build_wheels.sh; bash ./script/build_wheels.sh;
+        - sudo chmod a+r *.whl
+        - WHEEL_FILE=*.whl
+        - chmod +x ./script/upload-scripts/upload_wheel.sh; bash ./script/upload-scripts/upload_wheel.sh $WHEEL_FILE
+      workspaces:
+        create:
+          name: wheels_cache_312
+          paths:
+            - ./*.whl
+        use: build_cache
+
+    - name: "Create Wheel for Python 3.13"
+      if: env(WHEEL_BUILD) = true
+      env: PYTHON_VERSION="3.13"
+      script:
+        - echo "wheel build python 3.13"
+        - source variable.sh
+        - chmod +x ./script/build_wheels.sh; bash ./script/build_wheels.sh;
+        - sudo chmod a+r *.whl
+        - WHEEL_FILE=*.whl
+        - chmod +x ./script/upload-scripts/upload_wheel.sh; bash ./script/upload-scripts/upload_wheel.sh $WHEEL_FILE
+      workspaces:
+        create:
+          name: wheels_cache_313
+          paths:
+            - ./*.whl
+        use: build_cache
+      allow_failure: true
     - stage: Source code scanner
       if: env(ENABLE_TRIVY) = true AND env(VALIDATE_BUILD_SCRIPT) = true
       name: Run trivy scan
