@@ -276,7 +276,10 @@ jobs:
       if: env(BUILD_DOCKER) = true AND env(ENABLE_GRYPE) = true
       script:
         - source variable.sh;
+        - while true; do echo "---- Scan in Progress ----"; sleep 180; done &
+        - printer_pid=$!
         - docker load -i "$HOME/build/$TRAVIS_REPO_SLUG/image.tar"; chmod +x ./script/scanner-scripts/grype_image_scan.sh;bash ./script/scanner-scripts/grype_image_scan.sh; mkdir image_grype; mv grype_image_sbom_results.json grype_image_vulnerabilities_results.json image_grype;
+        - kill $printer_pid
       workspaces:
         create:
           name: image_grype
