@@ -1,7 +1,7 @@
 {
     "maintainer": "Yugesh Nagvekar",
     "package_name": "ruby",
-    "github_url": "http://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.5.tar.gz",
+    "github_url": "https://github.com/ruby/ruby",
     "version": "3.4.5",
     "default_branch": "master",
     "package_dir": "r/ruby",
