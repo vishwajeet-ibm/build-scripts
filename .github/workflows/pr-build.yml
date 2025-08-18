@@ -1,0 +1,25 @@
+name: PR Build
+
+on:
+  pull_request:
+    branches:
+      - master
+      - replica-master
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-s390x
+
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+
+      - name: Update and install packages
+        run: |
+          sudo apt update -y
+          sudo apt install -y curl git tree
+
+      - name: Clone another GitHub repo
+        run: |
+          git clone https://github.com/octocat/Hello-World.git
+          ls -R Hello-World
