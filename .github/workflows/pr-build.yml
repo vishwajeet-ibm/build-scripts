@@ -24,7 +24,6 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          cu
           pip3 install --force-reinstall -v "requests==2.31.0"
           pip3 install --upgrade docker
 
