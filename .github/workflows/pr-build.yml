@@ -21,11 +21,18 @@ jobs:
           sudo add-apt-repository universe
           sudo apt update -y
           sudo apt-get install -y file python3-pip
-
-      - name: Install Python dependencies
+      - name: Set up Python venv
         run: |
-          pip3 install --force-reinstall -v "requests==2.31.0"
-          pip3 install --upgrade docker
+          sudo apt update
+          sudo apt install -y python3-venv python3-full
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install requests==2.31.0 docker
+      # - name: Install Python dependencies
+      #   run: |
+      #     pip3 install --force-reinstall -v "requests==2.31.0"
+      #     pip3 install --upgrade docker
 
       - name: Set PR number
         run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
