@@ -17,7 +17,7 @@ jobs:
       - name: Install required packages
         run: |
           sudo apt update -y
-          sudo apt-get install -y file
+          sudo apt-get install -y file pip3
 
       - name: Install Python dependencies
         run: |
