@@ -1,4 +1,4 @@
- #!/bin/bash -e
+#!/bin/bash -e
 
 sudo apt update -y && sudo apt-get install file -y
 #pip3 install --upgrade requests
@@ -19,14 +19,13 @@ docker_build_non_root() {
 }
 
 #Below conditions are used to select the base image based on the 2 flags, tested_on and non_root_build. A docker_build_non_root function is called when non root build is true.
-if [[ "$TESTED_ON" == UBI:9* || "$TESTED_ON" == UBI9* ]];
+if [[ "$TESTED_ON" == UBI:9*  || "$TESTED_ON" == UBI9* ]];
 then
-    ubi_version=$(echo "$TESTED_ON" | grep -oE '[0-9]+\.[0-9]+')
-    docker pull registry.access.redhat.com/ubi9/ubi:$ubi_version
-    docker_image="registry.access.redhat.com/ubi9/ubi:$ubi_version"
+    docker pull registry.access.redhat.com/ubi9/ubi:9.3
+    docker_image="registry.access.redhat.com/ubi9/ubi:9.3"
     if [[ "$NON_ROOT_BUILD" == "true" ]];
     then
-        docker_build_non_root "registry.access.redhat.com/ubi9/ubi:$ubi_version"
+        docker_build_non_root "registry.access.redhat.com/ubi9/ubi:9.3"
     fi
 else
     docker pull registry.access.redhat.com/ubi8/ubi:8.7
@@ -34,10 +33,11 @@ else
     if [[ "$NON_ROOT_BUILD" == "true" ]];
     then
         docker_build_non_root "registry.access.redhat.com/ubi8/ubi:8.7"
-    fi  
+    fi    
 fi
 
-# python3 script/validate_builds_currency.py "$PKG_DIR_PATH$BUILD_SCRIPT" "$VERSION" "$docker_image" > build_log &
+WHEEL_SCRIPT=gha-script/create_wheel_wrapper.sh
+#python3 gha-script/build_wheels.py "$WHEEL_SCRIPT" "$PYTHON_VERSION" "$docker_image" "$PKG_DIR_PATH$BUILD_SCRIPT" "$VERSION" > build_log &
 
 # SCRIPT_PID=$!
 # while ps -p $SCRIPT_PID > /dev/null
@@ -46,7 +46,7 @@ fi
 #   sleep 100
 # done
 # wait $SCRIPT_PID
-python3 gha-script/validate_builds_currency.py "$PKG_DIR_PATH$BUILD_SCRIPT" "$VERSION" "$docker_image" 2>&1 | tee build_log
+python3 gha-script/build_wheels.py "$WHEEL_SCRIPT" "$PYTHON_VERSION" "$docker_image" "$PKG_DIR_PATH$BUILD_SCRIPT" "$VERSION" 2>&1 | tee build_log
 my_pid_status=${PIPESTATUS[0]}
 
 build_size=$(stat -c %s build_log)

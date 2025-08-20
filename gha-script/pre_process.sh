@@ -32,3 +32,4 @@ for language in "${langs[@]}"; do
         fi
     fi
 done
+
