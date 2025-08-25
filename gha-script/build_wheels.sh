@@ -1,9 +1,18 @@
 #!/bin/bash -e
 
-sudo apt update -y && sudo apt-get install file -y
-#pip3 install --upgrade requests
-pip3 install --force-reinstall -v "requests==2.31.0"
-pip3 install --upgrade docker
+# sudo apt update -y && sudo apt-get install file -y
+# #pip3 install --upgrade requests
+# pip3 install --force-reinstall -v "requests==2.31.0"
+# pip3 install --upgrade docker
+sudo apt update -y
+sudo apt install -y software-properties-common
+sudo add-apt-repository universe -y
+sudo apt update -y
+sudo apt-get install -y file python3-pip python3-venv python3-full
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install requests==2.31.0 docker
 
 echo "Running build script execution in background for "$PKG_DIR_PATH$BUILD_SCRIPT" "$VERSION" " 
 echo "*************************************************************************************"
