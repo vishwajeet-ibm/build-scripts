@@ -39,6 +39,8 @@ if [ "$validate_build_script" == true ]; then
 
     echo "Executing Trivy FS scanner in light mode..."
     sudo trivy -q fs --light --timeout 30m -f json "${cloned_package}" > trivy_source_vulnerabilities_results.json
+    cat trivy_source_vulnerabilities_results.json
     sudo trivy -q fs --light --timeout 30m -f cyclonedx "${cloned_package}" > trivy_source_sbom_results.cyclonedx
+    cat trivy_source_sbom_results.cyclonedx
 fi
 
