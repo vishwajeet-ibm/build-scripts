@@ -33,8 +33,8 @@ if [ $validate_build_script == true ];then
     sudo trivy -q fs --timeout 30m -f json "${cloned_package}" > trivy_source_vulnerabilities_results.json || true
     echo "trivy.db not found, copying again.."
     find / -name "trivy.db" 2>/dev/null
-	find / -type d -name ".cache" 2>/dev/null
-    sudo chmod -R 755 "/root/.cache/trivy/db"
+	find / -type d -path "*/.cache/trivy/db" 2>/dev/null
+    sudo chmod -R 755 "/usr/local/share/.cache/trivy/db"
     sudo docker run -d --name trivy-container "$DOCKER_IMAGE"
     sudo docker cp trivy-container:/trivy.db /root/.cache/trivy/db/trivy.db
     sudo docker rm -f trivy-container
