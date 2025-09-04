@@ -363,6 +363,8 @@ jobs:
       - name: Upload Scanner Results to COS
         env:
           gha_currency_service_id_api_key_dev: ${{ secrets.gha_currency_service_id_api_key_dev }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+          VERSION: ${{ inputs.version }}
         run: |
           export gha_currency_service_id_api_key_dev
           mkdir -p source
