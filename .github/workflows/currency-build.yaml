@@ -314,65 +314,6 @@ jobs:
           #chmod +x ./gha-script/upload-scripts/upload_file.sh
           #bash ./gha-script/upload-scripts/upload_file.sh source_scanner.tar.gz
 
-  # source_scanner:
-  #   needs: build
-  #   if: ${{ inputs.validate_build_script == 'true' }}
-  #   runs-on: ubuntu-24.04-s390x
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       scanner: [trivy, syft, grype]
-
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: Download package-cache
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: updated-package-cache
-  #         path: package-cache
-
-  #     - name: Run ${{ matrix.scanner }} Scan
-  #       run: |
-  #         source package-cache/variable.sh
-  #         source package-cache/scanner-env.sh
-  #         echo "---------updated scanner-env.sh ----------------"
-  #         cat package-cache/scanner-env.sh
-  #         chmod +x ./gha-script/scanner-scripts/${{ matrix.scanner }}_code_scan.sh
-  #         bash ./gha-script/scanner-scripts/${{ matrix.scanner }}_code_scan.sh
-          
-  #         mkdir source_${{ matrix.scanner }}
-  #         mv package-cache/${{ matrix.scanner }}_source* source_${{ matrix.scanner }}
-  #     - name: Upload ${{ matrix.scanner }} Scan Results
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: source-${{ matrix.scanner }}-results
-  #         path: source_${{ matrix.scanner }}
-
-  # upload_scanner_results:
-  #   needs: source_scanner
-  #   runs-on: ubuntu-24.04-s390x
-  #   steps:
-  #     - uses: actions/checkout@v4
-  
-  #     - name: Download all scan artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: all-scanner-results
-  
-  #     - name: Upload Scanner Results to COS
-  #       env:
-  #         gha_currency_service_id_api_key_dev: ${{ secrets.gha_currency_service_id_api_key_dev }}
-  #         PACKAGE_NAME: ${{ inputs.package_name }}
-  #         VERSION: ${{ inputs.version }}
-  #       run: |
-  #         export gha_currency_service_id_api_key_dev
-  #         mkdir -p source
-  #         find all-scanner-results -type f -exec cp {} source/ \;
-  #         tar cvzf source_scanner.tar.gz source
-  #         chmod +x ./gha-script/upload-scripts/upload_file.sh
-  #         bash ./gha-script/upload-scripts/upload_file.sh source_scanner.tar.gz
-
   build_docker:
     needs: build_info 
     if: ${{ inputs.build_docker == 'true' }}
