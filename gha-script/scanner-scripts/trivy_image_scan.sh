@@ -16,7 +16,7 @@ if [ $build_docker == true ];then
 	find / -name "trivy.db" 2>/dev/null
     	#sudo chmod -R 755 "$HOME/.cache/trivy/db"
 	sudo docker run -d --name trivy-container "$DOCKER_IMAGE"
-    	sudo docker cp trivy-container:/trivy.db $HOME/.cache/trivy/db/trivy.db
+    	sudo docker cp trivy-container:/trivy.db  /root/.cache/trivy/db/trivy.db
     	sudo docker rm -f trivy-container
 	echo "Executing trivy scanner"
 	sudo trivy -q image --timeout 30m -f json ${image_name} > trivy_image_vulnerabilities_results.json
