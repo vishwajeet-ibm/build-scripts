@@ -154,8 +154,8 @@ jobs:
           bash ../gha-script/pre_process.sh
           cd $GITHUB_WORKSPACE
           gzip build_log
-          chmod +x ./gha-script/upload-scripts/upload_file.sh
-          bash ./gha-script/upload-scripts/upload_file.sh build_log.gz
+         # chmod +x ./gha-script/upload-scripts/upload_file.sh
+         # bash ./gha-script/upload-scripts/upload_file.sh build_log.gz
 
 
 
@@ -305,14 +305,18 @@ jobs:
           mv package-cache/grype_source_sbom_results.json package-cache/grype_source_vulnerabilities_results.json source_grype
 
       - name: Upload Scanner Results
+        env:
+          gha_currency_service_id_api_key_dev: ${{ secrets.gha_currency_service_id_api_key_dev }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+          VERSION: ${{ inputs.version }}
         run: |
           mkdir source
           find source_trivy -mindepth 1 -exec mv -t source {} + 2>/dev/null || true
           find source_syft -mindepth 1 -exec mv -t source {} + 2>/dev/null || true
           find source_grype -mindepth 1 -exec mv -t source {} + 2>/dev/null || true
           tar cvzf source_scanner.tar.gz source
-          #chmod +x ./gha-script/upload-scripts/upload_file.sh
-          #bash ./gha-script/upload-scripts/upload_file.sh source_scanner.tar.gz
+          chmod +x ./gha-script/upload-scripts/upload_file.sh
+          bash ./gha-script/upload-scripts/upload_file.sh source_scanner.tar.gz
 
   build_docker:
     needs: build_info 
