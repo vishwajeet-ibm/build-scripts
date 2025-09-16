@@ -4,6 +4,7 @@
 # Package        : ocaml
 # Version        : 5.3.0
 # Source repo    : https://github.com/ocaml/ocaml.git
+# Tested on      : UBI: 9.3
 # Language       : ocaml
 # Travis-Check   : True
 # Script License : Apache License, Version 2 or later
@@ -37,7 +38,7 @@ wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
 mv RPM-GPG-KEY-CentOS-Official /etc/pki/rpm-gpg/.
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Official
 
-yum install bison
+yum install bison -y
 
 #Install ruby
 git clone -b $PACKAGE_VERSION $PACKAGE_URL
