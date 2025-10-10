@@ -1,6 +1,6 @@
 {
     "maintainer": "Vibhuti Sawant",
-    "package_name": "apachehttpserver",
+    "package_name": "apache-http-server",
     "github_url": "https://github.com/apache/httpd",
     "version": "2.4.65",
     "default_branch": "trunk",
